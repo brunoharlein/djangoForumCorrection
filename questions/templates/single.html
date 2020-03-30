@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block main %}
+  <h2>
+    {{topic.title}}
+    {% if topic.is_solved %}
+      <span class="badge badge-success">Résolu</span>
+    {% else %}
+      <span class="badge badge-dark">En cours</span>
+    {% endif %}
+  </h2>
+  <div class="card my-4">
+    <div class="card-body">
+      <p class="card-text">{{topic.problem}}</p>
+      <span class="float-right">Par {{topic.author}}, le {{topic.opening_date|date:"d/m/y h:m"}}</span>
+    </div>
+  </div>
+  <h3>Réponses</h3>
+
+  {% for message in topic.message_set.all %}
+    <div class="card my-4">
+      <div class="card-body">
+        <p class="card-text">{{message.content}}</p>
+        <span class="float-right">Par {{message.author}}, le {{message.publishing_date|date:"d/m/y h:m"}}</span>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+{% block aside %}
+  <h3>Répondre</h3>
+  {% if topic.is_solved %}
+    <p>Ce sujet est résolu, il n'est plus possible de répondre</p>
+  {% else %}
+    <form action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{field}}
+      </div>
+      {% endfor %}
+      <div class="text-center">
+        <input type="submit" value="Répondre" class= "btn btn-success">
+      </div>
+    </form>
+  {% endif %}
+{% endblock%}

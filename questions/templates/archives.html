@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block main %}
+  <h2>Vos sujets résolus</h2>
+  {% if topics %}
+    {% for topic in topics %}
+    <div class="card my-4">
+        <div class="card-header bg-dark text-white">
+          Résolu
+          <span class="float-right">le {{topic.opening_date|date:"d/m/y h:m"}}</span>
+        </div>
+      <div class="card-body">
+        <h5 class="card-title">{{topic.title}}</h5>
+        <p class="card-text">{{topic.problem}}</p>
+        <div class="text-center">
+          <a href="{% url 'delete_topic' topic_id=topic.id%}" class="btn btn-danger">Supprimer</a>
+          <a href="{% url 'single' topic_id=topic.id %}" class="btn btn-dark">Voir</a>
+        </div>
+      </div>
+    </div>
+    {% endfor%}
+  {% else %}
+    <p class="my-5">Aucun sujet archivé</p>
+  {% endif %}
+{% endblock %}
+
+{% block aside %}
+  <h3>Résolus</h3>
+  <ul class="list-group mt-4">
+    {% for topic in other_topics %}
+      <li class="list-group-item">
+        <a class="text-dark" href="{% url 'single' topic_id=topic.id %}">{{topic.title}}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock%}

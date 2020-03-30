@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block main %}
+  <h2>Résultats pour "{{research}}"</h2>
+  {% if topics %}
+    {% for topic in topics %}
+      <div class="card my-4">
+          <div class="card-header bg-dark text-white">
+            {% if topic.is_solved %}
+                Résolu
+            {% else %}
+                Non-résolu
+            {% endif%}
+            <span class="float-right">Par {{topic.author}}, le {{topic.opening_date|date:"d/m/y h:m"}}</span>
+          </div>
+        <div class="card-body">
+          <h5 class="card-title">{{topic.title}}</h5>
+          <p class="card-text">{{topic.problem}}</p>
+          <div class="text-center">
+            <a href="{% url 'single' question_id=topic.id %}" class="btn btn-dark">Voir</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="my-5">Nous n'avons rien trouvé correspondant à votre recherche</p>
+  {% endif %}
+{% endblock %}
+
+{% block aside %}
+  <h3>Informations</h3>
+  <p>Vous voici sur la page de recherche de l'application. Via le formulaire de recherche en haut à droite, vous pouvez rechercher des sujets correspondant
+  à vos mots clefs. Les recherches s'effectuent dans le titre et le contenu des sujets.</p>
+{% endblock%}

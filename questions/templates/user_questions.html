@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block main %}
+  <h2>Vos questions en cours</h2>
+  {% if topics %}
+    {% for topic in topics %}
+    <div class="card my-4">
+        <div class="card-header bg-dark text-white">
+          {% if topic.is_solved %}
+              Résolu
+          {% else %}
+              Non-résolu
+          {% endif%}
+          <span class="float-right">le {{topic.opening_date|date:"d/m/y h:m"}}</span>
+        </div>
+      <div class="card-body">
+        <h5 class="card-title">{{topic.title}}</h5>
+        <p class="card-text">{{topic.problem}}</p>
+        <div class="text-center">
+          <a href="{% url 'delete_topic' topic_id=topic.id%}" class="btn btn-danger">Supprimer</a>
+          <a href="{% url 'single' topic_id=topic.id %}" class="btn btn-dark">Voir</a>
+          {% if not topic.is_solved %}
+            <a href="{% url 'solve_topic' topic_id=topic.id%}" class="btn btn-success">Résolu</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor%}
+  {% else %}
+    <p class="my-5">Vous n'avez pas encore ouvert de sujet</p>
+  {% endif %}
+{% endblock %}
+
+{% block aside %}
+  <h3>Ouvrir un sujet</h3>
+
+  <form action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label>{{ field.label }}</label>
+          {{field}}
+        </div>
+      {% endfor %}
+      <div class="text-center">
+        <input type="submit" value="Enregistrer" class= "btn btn-success">
+      </div>
+  </form>
+{% endblock%}
