@@ -1,4 +1,7 @@
 # Forum d'entre-aide utilisateurs sous Django
+Avant de lire ce README :
+Après le clone il ne faut pas oublier de vérifier le venv, faire un pip freeze. Si Django n'est pas la ... installer le
+Il faudra faire de meme pour la BDD, le migration et le superuser ;-) 
 
 produire une application à l'aide du framework Python Django et se familiarisent ainsi avec ses fonctionnalités principales. L'application en question est un forum d'entre-aide et de questions techniques pour une entreprise sur le modèle de stackoverflow.
 
